@@ -1,0 +1,10 @@
+# Runtime (added later when needed)
+leap-ec>=1.0.0
+numpy>=1.26
+pandas>=2.1
+pyyaml>=6.0
+
+# Dev / test
+pytest>=7.0
+ruff>=0.5.0
+black>=24.0.0

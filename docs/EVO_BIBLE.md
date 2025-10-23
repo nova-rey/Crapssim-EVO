@@ -23,3 +23,8 @@
 
 *(All future major decisions append below; never overwrite prior entries.)*
 
+
+## Entry — Phase 1 Kickoff (Infrastructure & Tooling)
+- Added repo hygiene files, packaging skeleton, and empty module scaffolding.
+- Established Python 3.11 baseline, editable install, and CLI entry point stub.
+- No runtime behavior added; this phase is foundational only.
