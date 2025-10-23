@@ -1,0 +1,74 @@
+# Config & Logging Guide
+
+This document describes the configuration and logging foundations for CrapsSim-Evo.
+
+---
+
+## 🧩 Config System Overview
+
+Evo uses a lightweight YAML-based configuration system that merges:
+1. File-based settings (`.yml` or `.yaml`).
+2. Default values embedded in `evo/config.py`.
+3. Environment variable overrides using `${VAR}` syntax.
+
+### Load Function
+```python
+from evo.config import load_config
+cfg = load_config("configs/example.yml")
+```
+
+If no file is provided, defaults are returned:
+
+```
+run_id: anon
+logging:
+  level: INFO
+seed: null
+```
+
+### Environment Expansion
+
+Variables inside `${VAR}` will be replaced with the corresponding environment value.
+If the variable is unset, it remains literal.
+
+### Default Merge Rules
+- User-provided keys override defaults.
+- Unknown keys are preserved but not validated yet.
+- Future phases may add schema validation.
+
+⸻
+
+## 🪵 Logging Overview
+
+Logging is handled through `evo/logging.py`.
+
+### Setup
+```python
+from evo.logging import setup_logging
+setup_logging(level="INFO")
+```
+
+Logs follow a structured UTC format:
+
+```
+2025-10-23T15:22:01Z | INFO | evo.module | message
+```
+
+### Guidelines
+- Default level is INFO.
+- Use DEBUG for verbose diagnostics.
+- Logging setup is idempotent (safe to call twice).
+- No file handler yet—console output only.
+
+⸻
+
+## Future Enhancements
+
+| Phase | Planned Feature | Description |
+|-------|-----------------|-------------|
+| Phase 2 | Env var expansion | Already implemented. |
+| Phase 3 | Deterministic seeding | Log RNG seeds for reproducibility. |
+| Phase 5 | File handler | Optional log to run_id.log. |
+| Phase 7 | JSON log mode | Structured logs for machine parsing. |
+
+---
