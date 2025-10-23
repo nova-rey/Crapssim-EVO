@@ -1,32 +1,52 @@
 # Python
 __pycache__/
 *.py[cod]
-*.so
 *.pyd
 *.pyo
+*.so
 *.egg-info/
+.eggs/
 build/
 dist/
-.eggs/
-.pytest_cache/
-.mypy_cache/
-.coverage
-htmlcov/
+.site-packages/
 
-# Envs & tools
+# Virtual envs
 .venv/
-.env
-env/
 venv/
+env/
+.env
+.python-version
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Linters / formatters / tools
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+.pyre/
+.pyright/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Project artifacts
 runs/
 seeds/
 examples/*.zip
 *.zip
+*.tar
+*.tar.gz
+*.tar.zst
 
-# OS/editor
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
+# Notebooks & checkpoints
+.ipynb_checkpoints/
