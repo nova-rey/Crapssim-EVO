@@ -1,3 +1,6 @@
-run_id: "dev-example"
+# Example configuration for CrapsSim-Evo
+run_id: dev-test
+seed: ${RANDOM_SEED}
 logging:
-  level: "INFO"
+  level: debug
+notes: "Example configuration used in tests for environment expansion and defaults."
