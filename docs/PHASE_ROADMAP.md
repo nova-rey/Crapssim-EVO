@@ -1,20 +1,19 @@
 # CrapsSim-Evo — Active Phase Plan
 
-## Current Phase: 1 — Infrastructure & Tooling
+## Current Phase: 2 — Config & Logging Scaffolding
 
 ### Objective
-Initialize repo hygiene, packaging, and base scaffolding. No runtime behavior.
+Implement config loader (YAML + defaults + env substitution) and structured logging utilities.
 
 ### Checkpoints
 | Phase | Checkpoint | Title | Outcome |
 |------:|------------|-------|---------|
-| 1 | P1·C1 | Git hygiene | Add .gitattributes, .editorconfig, full MIT LICENSE, refreshed .gitignore. |
-| 1 | P1·C2 | Packaging skeleton | pyproject (0.0.1), console script, optional deps, requirements. |
-| 1 | P1·C3 | Lint & format setup | Ruff config, Black settings, CI lint job. |
+| 2 | P2·C1 | Config loader | YAML parser, defaults, env-var substitution. |
+| 2 | P2·C2 | Logger | UTC timestamps, structured format, idempotent setup. |
+| 2 | P2·C3 | Docs & tests | Add CONFIG_GUIDE.md and validation tests. |
 
 ### Exit Criteria
-- `pip install -e .` succeeds.
-- `pytest -q` passes existing tests.
-- `ruff check .` passes locally and in CI.
-- `black --check .` passes locally and in CI.
-- Repo structure matches planned layout.
+- Config loader merges YAML + defaults cleanly.
+- Logging produces UTC-timestamped structured output.
+- `pytest -q` passes all config/logging tests.
+- Repo deterministic and CI green.

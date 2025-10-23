@@ -40,3 +40,9 @@
 - Added `ruff.toml` with Python 3.11 target, 100 line length, and import-order checks.
 - Created CI workflow to run `ruff check` and `black --check` on pushes and PRs.
 - Formatting standardized with Black (line length 100). No runtime behavior changed.
+
+## Entry — P2·C0 Config & Logging Phase Kickoff
+- Began Phase 2 focused on configuration and logging infrastructure.
+- Established plan for YAML-based config loader with default merging and environment variable expansion.
+- Planned structured UTC logging setup (console-only, idempotent).
+- Added `docs/CONFIG_GUIDE.md` outlining design and usage examples.
