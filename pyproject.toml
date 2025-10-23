@@ -10,8 +10,11 @@ readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Rey", email = "devnull@example.com" }]
 license = { text = "MIT" }
-# Keep core deps empty during pre-spec phases to avoid heavy installs
-dependencies = []
+# Core runtime dependencies required for the library to function.
+# Keep this list minimal to avoid heavy default installs.
+dependencies = [
+  "pyyaml>=6.0",
+]
 
 [project.optional-dependencies]
 # Install with: pip install -e .[runtime]
