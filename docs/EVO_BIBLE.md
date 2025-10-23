@@ -46,3 +46,10 @@
 - Established plan for YAML-based config loader with default merging and environment variable expansion.
 - Planned structured UTC logging setup (console-only, idempotent).
 - Added `docs/CONFIG_GUIDE.md` outlining design and usage examples.
+
+## Entry — P2·C1 Config Loader
+- Implemented `load_config()` in `evo/config.py` to load YAML, merge defaults, and expand environment variables.
+- Added recursive env-var substitution for `${VAR}` patterns.
+- Ensured defaults always applied: `run_id`, `logging.level`, `seed`.
+- Updated `configs/example.yml` with a realistic testable configuration.
+- Added unit tests for defaults, env expansion, and normalization.
