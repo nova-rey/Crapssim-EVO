@@ -1,15 +1,17 @@
 from __future__ import annotations
-from pathlib import Path
-from typing import Optional
-import zipfile
+
 import hashlib
 import json
 import os
-import shutil
 import tempfile
+import zipfile
+from pathlib import Path
+from typing import Optional
+
 
 class BundleError(Exception):
     pass
+
 
 def _safe_extract(zf: zipfile.ZipFile, dest: Path) -> None:
     dest = dest.resolve()
@@ -19,6 +21,7 @@ def _safe_extract(zf: zipfile.ZipFile, dest: Path) -> None:
             raise BundleError("Illegal path in zip (zip-slip)")
         zf.extract(zi, dest)
 
+
 def open_bundle(path: Path, staging_root: Optional[Path] = None) -> Path:
     p = Path(path)
     if not p.exists():
@@ -27,6 +30,7 @@ def open_bundle(path: Path, staging_root: Optional[Path] = None) -> Path:
     with zipfile.ZipFile(p, "r") as zf:
         _safe_extract(zf, root)
     return root
+
 
 def write_bundle(staging_dir: Path, out_zip: Path) -> Path:
     staging_dir = Path(staging_dir)
@@ -40,12 +44,14 @@ def write_bundle(staging_dir: Path, out_zip: Path) -> Path:
                 zf.write(full, arcname=str(arc))
     return out_zip
 
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
     return h.hexdigest()
+
 
 def write_checksums(staging_dir: Path, rel_paths: list[str]) -> None:
     run_dir = Path(staging_dir) / "run"
@@ -55,7 +61,11 @@ def write_checksums(staging_dir: Path, rel_paths: list[str]) -> None:
         fp = Path(staging_dir) / rp
         if fp.exists():
             lines.append(f"sha256  {sha256_file(fp)}  {rp}")
-    (run_dir / "checksums.txt").write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+    contents = "\n".join(lines)
+    if lines:
+        contents += "\n"
+    (run_dir / "checksums.txt").write_text(contents, encoding="utf-8")
+
 
 def write_contents_index(staging_dir: Path) -> None:
     root = Path(staging_dir)
@@ -64,11 +74,13 @@ def write_contents_index(staging_dir: Path) -> None:
         for n in names:
             full = Path(base) / n
             rel = full.relative_to(root)
-            files.append({
-                "path": str(rel).replace("\\", "/"),
-                "bytes": full.stat().st_size,
-                "sha256": sha256_file(full)
-            })
+            files.append(
+                {
+                    "path": str(rel).replace("\\", "/"),
+                    "bytes": full.stat().st_size,
+                    "sha256": sha256_file(full),
+                }
+            )
     run_dir = root / "run"
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "CONTENTS.json").write_text(json.dumps({"files": files}, indent=2), encoding="utf-8")

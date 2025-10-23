@@ -1,7 +1,10 @@
 from __future__ import annotations
+
 import argparse
-from evo.logging import setup_logging
+
 from evo.config import load_config
+from evo.logging import setup_logging
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="CrapsSim-Evo CLI (pre-spec scaffolding)")
@@ -22,6 +25,7 @@ def main() -> None:
     # Placeholder behavior only
     print("CrapsSim-Evo scaffolding is installed.")
     print(f"run_id={cfg.get('run_id')}, bundle_in={args.bundle_in}, bundle_out={args.bundle_out}")
+
 
 if __name__ == "__main__":
     main()

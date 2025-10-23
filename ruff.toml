@@ -1,0 +1,24 @@
+# Ruff configuration: fast linting with sensible defaults
+target-version = "py311"
+line-length = 100
+
+# Enable core error/format/import rules
+[lint]
+select = ["E", "F", "I"]
+ignore = []
+
+# Exclude generated, build, and example artifacts
+exclude = [
+  ".git",
+  ".venv",
+  "venv",
+  "build",
+  "dist",
+  ".eggs",
+  ".pytest_cache",
+  ".mypy_cache",
+  ".ruff_cache",
+  "examples",
+  "runs",
+  "seeds"
+]
