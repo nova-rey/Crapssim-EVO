@@ -1,8 +1,10 @@
 import os
-import tempfile
 from pathlib import Path
+
 import yaml
+
 from evo.config import load_config
+
 
 def test_defaults_returned_when_no_file():
     cfg = load_config(None)
