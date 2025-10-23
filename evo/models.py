@@ -2,9 +2,12 @@
 Stub data models for Spec, DNA, PopulationManifest, BundleMeta.
 Fields will be expanded once CSC spec is finalized.
 """
+
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
+
 
 @dataclass
 class Spec:
@@ -13,6 +16,7 @@ class Spec:
     params: Dict[str, float] = field(default_factory=dict)
     toggles: Dict[str, bool] = field(default_factory=dict)
     identity: Dict[str, str] = field(default_factory=dict)
+
 
 @dataclass
 class DNA:
@@ -27,6 +31,7 @@ class DNA:
     grace_remaining: int = 0
     hashes: Dict[str, str] = field(default_factory=dict)
 
+
 @dataclass
 class PopulationManifest:
     evo_schema_version: str = "0.1"
@@ -38,6 +43,7 @@ class PopulationManifest:
     elite_k: Optional[int] = None
     objectives: List[str] = field(default_factory=list)
     candidates: List[Dict[str, str]] = field(default_factory=list)
+
 
 @dataclass
 class BundleMeta:

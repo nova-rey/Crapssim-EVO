@@ -1,8 +1,10 @@
 from __future__ import annotations
+
 from pathlib import Path
 from typing import Any, Dict, Optional
-import os
+
 import yaml
+
 
 def load_config(path: Optional[str | Path]) -> Dict[str, Any]:
     """

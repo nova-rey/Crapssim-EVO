@@ -35,3 +35,8 @@
 - Replaced placeholder `LICENSE` with full MIT text.
 - Overwrote `.gitignore` with a comprehensive Python/project superset.
 - No runtime behavior changed.
+
+## Entry — P1·C3 Lint & Format Setup
+- Added `ruff.toml` with Python 3.11 target, 100 line length, and import-order checks.
+- Created CI workflow to run `ruff check` and `black --check` on pushes and PRs.
+- Formatting standardized with Black (line length 100). No runtime behavior changed.
