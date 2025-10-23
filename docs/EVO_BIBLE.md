@@ -28,3 +28,10 @@
 - Added repo hygiene files, packaging skeleton, and empty module scaffolding.
 - Established Python 3.11 baseline, editable install, and CLI entry point stub.
 - No runtime behavior added; this phase is foundational only.
+
+## Entry — P1·C1 Git Hygiene
+- Added `.gitattributes` to enforce LF line endings and mark binary types.
+- Added `.editorconfig` for consistent indentation, encoding, and whitespace rules.
+- Replaced placeholder `LICENSE` with full MIT text.
+- Overwrote `.gitignore` with a comprehensive Python/project superset.
+- No runtime behavior changed.

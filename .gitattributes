@@ -1,0 +1,25 @@
+# Normalize line endings to LF for all text files
+* text=auto eol=lf
+
+# Common text types
+*.py   text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.csv  text eol=lf
+*.ini  text eol=lf
+*.toml text eol=lf
+*.sh   text eol=lf
+
+# Treat these as binary (no diff/CRLF conversion)
+*.zip  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.pdf  binary
+
+# Help GitHub linguist (optional)
+*.py linguist-language=Python
