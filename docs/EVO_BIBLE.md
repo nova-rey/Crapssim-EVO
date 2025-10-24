@@ -83,3 +83,10 @@
 - Tests verify round-trip preservation, validation, and checksum accuracy.
 - Repo verified Ruff + Black clean.
 - Tagged baseline `v0.0.4-phase4-baseline`.
+
+## Entry — Phase 4 Wrap-Up
+- Completed Bundle I/O & Manifest phase.
+- All bundle utilities verified via unit tests and round-trip integrity.
+- Updated roadmap to mark Phase 4 complete.
+- Repo ready for Phase 5 (Fitness & Metrics Framework).
+- Lint and format confirmed clean (Ruff + Black).

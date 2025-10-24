@@ -1,20 +1,28 @@
 # CrapsSim-Evo — Active Phase Plan
 
-## Current Phase: 3 — Deterministic RNG Utilities
+## Current Phase: 4 — Bundle I/O & Manifest (Completed)
 
 ### Objective
-Create a unified RNG system enabling deterministic reproducibility and replayability.
+Implement deterministic `.zip` bundle handling for Evo: unpack, validate, repack, and generate manifests.
 
 ### Checkpoints
-| Phase | Checkpoint | Title | Outcome |
-|:----:|:------------|:------|:---------|
-| 3 | P3·C1 | Seed + Subseed Utilities | Root and derived seed helpers implemented |
-| 3 | P3·C2 | RNG Context | Context manager ensures isolation and determinism |
-| 3 | P3·C3 | Hash Helpers | Stable dict and byte hashing utilities |
-| 3 | P3·C4 | Tests + Docs | Verified repeatability, docs updated, baseline tagged |
+| Phase | Checkpoint | Title | Status |
+|:----:|:------------|:------|:--------|
+| 4 | P4·C1 | Unpack + Validation | ✅ Merged |
+| 4 | P4·C2 | Repack + Pass-through | ✅ Merged |
+| 4 | P4·C3 | Checksums + Index | ✅ Merged |
+| 4 | P4·C4 | Docs & Bible Wrap-Up | ✅ This commit |
 
 ### Exit Criteria
-- RNG behavior deterministic across runs.
-- `pytest -q` green and consistent.
-- Ruff + Black clean.
-- Baseline tag: `v0.0.3-phase3-baseline`.
+- Bundle extraction and repack confirmed lossless.
+- Zip-slip guard validated.
+- Checksum + contents index verified by tests.
+- Repo lint- and format-clean (Ruff + Black).
+- Tag created: `v0.0.4-phase4-baseline`.
+
+---
+
+## Next Phase: 5 — Fitness & Metrics Framework
+Lay the groundwork for evaluating CSC simulation results:
+- Parse journals, compute bankroll-based metrics, and generate fitness scores.
+- Prepare metrics interface for LEAP integration.
