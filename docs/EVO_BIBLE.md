@@ -98,3 +98,14 @@
 - Added tests covering ROI, drawdown, PSO, and fallback logic.
 - Documented scoring formula in `FITNESS_GUIDE.md`.
 - Verified Ruff + Black clean; tagged baseline `v0.0.5-phase5-baseline`.
+
+## Entry — Phase 6 Population & Evolution Loop
+- Implemented deterministic LEAP-style loop (tournament selection, crossover, mutation, elitism).
+- Individuals carry `spec`, `dna`, and `fitness`; elites preserved byte-for-byte.
+- Exported next-gen folders with `population_manifest.json` and per-seed files; zip supported.
+- All stochastic steps gated by `rng_context("evolution", root_seed)`.
+- Tests validate population loading, evolution, and export; repo lint/format clean.
+- Baseline tagged `v0.0.6-phase6-baseline`.
+
+Note: LEAP import is deferred until Phase 7/8 when we align representation with operators.
+Current loop is LEAP-compatible by design, but pure stdlib for now.
