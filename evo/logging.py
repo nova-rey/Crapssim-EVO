@@ -7,10 +7,13 @@ from typing import Optional
 
 _LOG_FORMAT = "%(asctime)sZ | %(levelname)s | %(name)s | %(message)s"
 
+
 class _UTCFormatter(logging.Formatter):
     """Formatter that renders timestamps in UTC ISO-8601 format."""
+
     def formatTime(self, record, datefmt=None):
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def setup_logging(level: str = "INFO", name: Optional[str] = None) -> logging.Logger:
     """
