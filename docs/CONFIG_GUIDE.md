@@ -14,10 +14,11 @@ Evo uses a lightweight YAML-based configuration system that merges:
 ### Load Function
 ```python
 from evo.config import load_config
+
 cfg = load_config("configs/example.yml")
 ```
 
-If no file is provided, defaults are returned:
+If no file is provided, defaults from `evo.config.DEFAULT_CONFIG` are returned:
 
 ```
 run_id: anon
@@ -29,7 +30,7 @@ seed: null
 ### Environment Expansion
 
 Variables inside `${VAR}` will be replaced with the corresponding environment value.
-If the variable is unset, it remains literal.
+If the variable is unset, it remains literal (e.g., `${UNKNOWN}` stays `${UNKNOWN}`).
 
 ### Default Merge Rules
 - User-provided keys override defaults.
@@ -59,6 +60,21 @@ Logs follow a structured UTC format:
 - Use DEBUG for verbose diagnostics.
 - Logging setup is idempotent (safe to call twice).
 - No file handler yet—console output only.
+
+⸻
+
+## ✅ Verified Behavior (Phase 2 Complete)
+
+- `load_config()` merges defaults, expands `${VAR}`, and normalizes log level.
+- `setup_logging()` outputs lines like:
+
+  ```
+  2025-10-23T15:22:01Z | INFO | evo.module | message
+  ```
+
+- Both functions are idempotent and covered by tests.
+- Env substitution leaves unknown variables intact.
+- Logging timestamps are UTC and end with “Z”.
 
 ⸻
 

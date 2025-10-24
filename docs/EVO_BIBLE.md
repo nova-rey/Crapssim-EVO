@@ -59,3 +59,10 @@
 - Default level INFO; supports DEBUG, WARNING, ERROR, CRITICAL.
 - Prevents duplicate handlers when re-initialized.
 - Added unit tests confirming format, idempotency, and level filtering.
+
+## Entry — P2·C3 Docs & Tests Wrap-Up
+- Phase 2 complete: Config loader and logger confirmed stable.
+- Added verified behavior section to `CONFIG_GUIDE.md`.
+- All unit tests green and CI lint clean (Ruff + Black).
+- Ready for Phase 3 (deterministic RNG utilities).
+- Tagged baseline `v0.0.2-phase2-baseline`.
