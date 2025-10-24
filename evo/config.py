@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 import os
 import re
 import sys
-import yaml
 from pathlib import Path
 from typing import Any, Dict, Optional
+
+import yaml
 
 _ENV_PATTERN = re.compile(r"\$\{([^}^{]+)\}")
 
