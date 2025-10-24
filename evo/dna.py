@@ -77,6 +77,6 @@ def update_dna(
     legacy = normalize_ops_log(out.get("ops_log", []))
     seq = list(legacy) + list(op_entries)
     for i, ent in enumerate(seq):
-        ent.setdefault("t", i)
+        ent["t"] = i
     out["ops_log"] = seq
     return out

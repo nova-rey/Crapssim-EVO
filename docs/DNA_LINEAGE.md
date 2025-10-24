@@ -6,8 +6,11 @@ Phase 7 introduces stronger lineage tracking for evolver outputs.
 ```json
 {
   "evo_schema_version": "0.2",
-  "parents": ["seed_0002", "seed_0005"],
-  "parent_hashes": {"seed_0002": "<sha256>", "seed_0005": "<sha256>"},
+  "parents": ["seed_0001", "seed_0002"],
+  "parent_hashes": {
+    "seed_0001": "<sha256-of-seed_0001-spec.json>",
+    "seed_0002": "<sha256-of-seed_0002-spec.json>"
+  },
   "ops_log": [{"type": "mutation", "nudge_frac": 0.1, "t": 0}],
   "rng_subseed": 90123,
   "identity": {"source": "evolver", "gen_id": "g003", "candidate_id": "seed_0007"}
