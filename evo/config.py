@@ -16,18 +16,22 @@ _DEFAULTS: Dict[str, Any] = {
     "logging": {"level": "INFO"},
 }
 
+
 def _expand_env(value: Any) -> Any:
     """Recursively expand ${VAR} expressions using os.environ."""
     if isinstance(value, str):
+
         def replace_var(match: re.Match[str]) -> str:
             var_name = match.group(1)
             return os.environ.get(var_name, match.group(0))
+
         return _ENV_PATTERN.sub(replace_var, value)
     elif isinstance(value, dict):
         return {k: _expand_env(v) for k, v in value.items()}
     elif isinstance(value, list):
         return [_expand_env(v) for v in value]
     return value
+
 
 def _merge_defaults(user_cfg: Dict[str, Any]) -> Dict[str, Any]:
     merged = dict(_DEFAULTS)
@@ -39,6 +43,7 @@ def _merge_defaults(user_cfg: Dict[str, Any]) -> Dict[str, Any]:
         else:
             merged[key] = val
     return merged
+
 
 def load_config(path: Optional[str | Path]) -> Dict[str, Any]:
     """
@@ -63,6 +68,7 @@ def load_config(path: Optional[str | Path]) -> Dict[str, Any]:
         if isinstance(lvl, str):
             expanded["logging"]["level"] = lvl.upper()
     return expanded
+
 
 if __name__ == "__main__":
     import argparse
