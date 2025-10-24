@@ -1,50 +1,37 @@
 from __future__ import annotations
-
 import logging
 import sys
 from datetime import datetime, timezone
-from typing import Optional, TextIO
+from typing import Optional
 
 _LOG_FORMAT = "%(asctime)sZ | %(levelname)s | %(name)s | %(message)s"
 
-
 class _UTCFormatter(logging.Formatter):
-    """Formatter that renders timestamps in UTC with a ``Z`` suffix."""
+    """Formatter that renders timestamps in UTC ISO-8601 format."""
+    def formatTime(self, record, datefmt=None):
+        return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
 
-    def converter(self, timestamp: float):  # type: ignore[override]
-        return datetime.fromtimestamp(timestamp, tz=timezone.utc).timetuple()
-
-    def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:  # type: ignore[override,N802]
-        dt = datetime.fromtimestamp(record.created, tz=timezone.utc)
-        if datefmt:
-            return dt.strftime(datefmt)
-        return dt.strftime("%Y-%m-%dT%H:%M:%S")
-
-
-def setup_logging(
-    level: str = "INFO",
-    *,
-    name: Optional[str] = None,
-    stream: Optional[TextIO] = None,
-) -> logging.Logger:
-    """Configure and return a logger that writes UTC timestamps.
-
-    Args:
-        level: Logging level name to apply. Defaults to ``"INFO"``.
-        name: Optional logger name. If omitted the root logger is configured.
-        stream: Optional IO object to receive log output. Defaults to stdout.
+def setup_logging(level: str = "INFO", name: Optional[str] = None) -> logging.Logger:
     """
+    Configure a console logger with UTC timestamps and idempotent handlers.
+    Returns the configured logger (root by default).
+    """
+    lvl = getattr(logging, str(level).upper(), logging.INFO)
+    logger = logging.getLogger(name) if name else logging.getLogger()
 
-    logger = logging.getLogger(name)
-    lvl = getattr(logging, level.upper(), logging.INFO)
+    # Prevent duplicate EVO handlers
+    needs_handler = True
+    for h in logger.handlers:
+        if isinstance(h, logging.StreamHandler) and getattr(h, "_evo_handler", False):
+            needs_handler = False
+            break
+
     logger.setLevel(lvl)
-
-    handler_stream = stream if stream is not None else sys.stdout
-    handler = logging.StreamHandler(handler_stream)
-    handler.setFormatter(_UTCFormatter(_LOG_FORMAT, datefmt="%Y-%m-%dT%H:%M:%S"))
-
-    logger.handlers.clear()
-    logger.addHandler(handler)
-    logger.propagate = False
+    if needs_handler:
+        handler = logging.StreamHandler(stream=sys.stdout)
+        handler.setLevel(lvl)
+        handler.setFormatter(_UTCFormatter(_LOG_FORMAT))
+        handler._evo_handler = True  # mark as EVO handler
+        logger.addHandler(handler)
 
     return logger
