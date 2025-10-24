@@ -74,3 +74,12 @@
 - Tests confirm RNG isolation, repeatability, and hash stability.
 - Repo verified lint- and format-clean (Ruff + Black).
 - Baseline tagged `v0.0.3-phase3-baseline`.
+
+## Entry — Phase 4 Bundle I/O & Manifest
+- Implemented safe `.zip` extraction and repacking with integrity checks.
+- Added checksum and contents index generation.
+- Introduced `meta/bundle.json` manifest (bundle_schema_version 1.0).
+- Enforced zip-slip guard and pass-through of unknown files.
+- Tests verify round-trip preservation, validation, and checksum accuracy.
+- Repo verified Ruff + Black clean.
+- Tagged baseline `v0.0.4-phase4-baseline`.
