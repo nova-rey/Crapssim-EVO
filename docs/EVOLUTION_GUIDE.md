@@ -23,6 +23,10 @@ population_manifest.json
 - Exporter rewrites `identity` breadcrumbs inside spec (safe for CSC to ignore).
 - **Elites’ specs remain byte-for-byte identical; identity breadcrumbs for elites live only in `dna.json`.**
 
+## Non-Elite Breadcrumbs
+Non-elites receive `spec.identity` breadcrumbs identifying their origin
+(source = evolver, gen_id, candidate_id). Elites never modify their spec files.
+
 ## Operator Notes
 - **Mutation**: ±10% nudges, snapped to table-friendly increments.
 - **Crossover**: field-wise choose from either parent for `params` and `toggles`.

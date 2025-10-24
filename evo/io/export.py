@@ -15,7 +15,7 @@ def write_generation_folder(
     out_dir.mkdir(parents=True, exist_ok=True)
     elite_ids = elite_ids or set()
     pop_manifest = {
-        "evo_schema_version": "0.1",
+        "pop_schema_version": "0.2",
         "gen_id": gen_id,
         "mode": "NORMAL",
         "pop_size": 0,

@@ -72,6 +72,7 @@ def mutate_individual(ind: Individual, nudge_frac: float = 0.1) -> Individual:
 def crossover_individuals(a: Individual, b: Individual) -> Individual:
     child = a.clone()
     child.spec = crossover_specs(a.spec, b.spec)
-    child.parents = [a.seed_id, b.seed_id]
+    # Ensure unique, ordered parent list (in case selection picked same twice)
+    child.parents = list(dict.fromkeys([a.seed_id, b.seed_id]))
     record_op(child.dna, "crossover(blocks)")
     return child
