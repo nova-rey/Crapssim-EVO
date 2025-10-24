@@ -53,3 +53,9 @@
 - Ensured defaults always applied: `run_id`, `logging.level`, `seed`.
 - Updated `configs/example.yml` with a realistic testable configuration.
 - Added unit tests for defaults, env expansion, and normalization.
+
+## Entry — P2·C2 Logger Implementation
+- Implemented idempotent console logger with UTC timestamps and consistent format.
+- Default level INFO; supports DEBUG, WARNING, ERROR, CRITICAL.
+- Prevents duplicate handlers when re-initialized.
+- Added unit tests confirming format, idempotency, and level filtering.
