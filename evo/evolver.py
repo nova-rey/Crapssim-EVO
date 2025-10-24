@@ -36,6 +36,7 @@ def evolve(
         pop_size = len(current)
     elite_k = max(1, math.floor(pop_size * elite_ratio))
     elites = elitism(current, elite_k)
+    elite_ids = {e.seed_id for e in elites}
 
     offspring: List[Individual] = []
     with rng_context("evolution", root_seed):
@@ -66,5 +67,6 @@ def evolve(
         out_dir,
         gen_id=f"g{int(gen_id.strip('g') or '0')+1}",
         individuals=next_pop,
+        elite_ids=elite_ids,
     )
     return next_pop
