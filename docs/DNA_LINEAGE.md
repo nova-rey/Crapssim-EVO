@@ -17,6 +17,10 @@ Phase 7 introduces stronger lineage tracking for evolver outputs.
 }
 ```
 
+### Population Manifest Version
+Each generation bundle includes a population_manifest.json whose top-level field
+"pop_schema_version": "0.2" distinguishes population metadata from DNA schema.
+
 Parent Hashes
 - Computed as SHA256 of each parent’s spec.json bytes.
 - Stored under parent_hashes keyed by seed id (stable sorted order).
