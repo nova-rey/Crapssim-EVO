@@ -1,43 +1,26 @@
-# Bundle Specification (.zip)
+# Bundle Specification (v1.0)
 
-## Format
-`.zip` chosen for simplicity; files are small.
+This document defines the structure and safety rules for `.zip` bundles exchanged between CrapsSim-Control (CSC) and CrapsSim-Evo (EVO).
 
-## Required Layout
+## Structure
+| Directory | Purpose |
+|:--|:--|
+| `seed_*/` | Contains `spec.json`, `dna.json`, and related seed data. |
+| `run/` | Holds simulator outputs and generated indices. |
+| `meta/` | Contains metadata such as `bundle.json`. |
 
-run/
-journal.csv
-report.json
-manifest.json
-spec.json
-checksums.txt
-CONTENTS.json
-meta/
-bundle.json
-README.txt
+## Safety
+- Zip-slip guarded during extraction.
+- Unknown files preserved.
+- Deterministic path separators (`/`).
+- SHA256 checksums for auditability.
 
-## meta/bundle.json
+## Manifest Example
 ```json
 {
   "bundle_schema_version": "1.0",
-  "producer": "CSC",
-  "run_id": "2025-10-23-g001",
-  "created_utc": "2025-10-23T15:12:03Z",
-  "format": "zip",
-  "contents": {
-    "journal": "run/journal.csv",
-    "report": "run/report.json",
-    "manifest": "run/manifest.json"
-  },
-  "schemas": {"journal":"1.1","report":"1.1","spec":"1.0"}
+  "producer": "EVO",
+  "created_utc": "2025-10-24T00:00:00Z",
+  "format": "zip"
 }
-
-Safety
-• Verify extraction paths stay inside staging dir.
-• Reject missing required files.
-• Preserve any unknown files verbatim.
-• Include SHA256 checksums for integrity.
-
-CLI Example
-
-csc run --from-bundle g001_input.zip --bundle-out g001_results.zip
+```
