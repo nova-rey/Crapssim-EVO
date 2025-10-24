@@ -88,3 +88,32 @@ Logs follow a structured UTC format:
 | Phase 7 | JSON log mode | Structured logs for machine parsing. |
 
 ---
+
+## 🎲 RNG Configuration
+
+Phase 3 introduces deterministic random control utilities.
+
+### Example Usage
+
+```python
+from evo import rng
+import random
+
+rng.seed_global(123)
+print(rng.make_subseed("operator_A", 123))
+
+with rng.rng_context("mutation", 123):
+    value = random.random()
+```
+
+Every run is replayable given the same seed in your config file:
+
+```
+seed: 123
+```
+
+### Stability Notes
+
+- Same seed + same name ⇒ same subseed.
+- RNG context restores the prior state after exit.
+- No NumPy RNGs yet; those will use `make_subseed()` later.

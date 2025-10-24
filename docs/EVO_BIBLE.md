@@ -66,3 +66,11 @@
 - All unit tests green and CI lint clean (Ruff + Black).
 - Ready for Phase 3 (deterministic RNG utilities).
 - Tagged baseline `v0.0.2-phase2-baseline`.
+
+## Entry — Phase 3 Deterministic RNG Utilities
+- Introduced reproducible RNG framework with `seed_global`, `make_subseed`, and `rng_context`.
+- Added SHA256-based `hash_bytes` and `hash_dict` utilities.
+- All functions deterministic across runs and platforms.
+- Tests confirm RNG isolation, repeatability, and hash stability.
+- Repo verified lint- and format-clean (Ruff + Black).
+- Baseline tagged `v0.0.3-phase3-baseline`.
