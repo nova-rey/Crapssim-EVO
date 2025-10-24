@@ -45,6 +45,11 @@ def test_evolve_produces_next_generation(tmp_path: Path) -> None:
     assert (out_dir / "population_manifest.json").exists()
     specs = list(out_dir.glob("seed_*/spec.json"))
     assert len(specs) == 2
+    dnas = list(out_dir.glob("seed_*/dna.json"))
+    assert len(dnas) == 2
+    meta = json.loads(dnas[0].read_text())
+    assert meta.get("evo_schema_version") == "0.2"
+    assert "parent_hashes" in meta and "rng_subseed" in meta
 
 
 def test_export_zip(tmp_path: Path) -> None:

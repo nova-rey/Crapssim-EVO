@@ -21,6 +21,7 @@ population_manifest.json
 - All randomness flows through `rng_context("evolution", root_seed)`.
 - Elites are copied first to stabilize ordering.
 - Exporter rewrites `identity` breadcrumbs inside spec (safe for CSC to ignore).
+- **Elites’ specs remain byte-for-byte identical; identity breadcrumbs for elites live only in `dna.json`.**
 
 ## Operator Notes
 - **Mutation**: ±10% nudges, snapped to table-friendly increments.

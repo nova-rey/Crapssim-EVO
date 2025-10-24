@@ -109,3 +109,12 @@
 
 Note: LEAP import is deferred until Phase 7/8 when we align representation with operators.
 Current loop is LEAP-compatible by design, but pure stdlib for now.
+
+## Entry — Phase 7 Lineage & DNA Tracking
+- Bumped DNA schema to **0.2** and added deterministic lineage fields.
+- Recorded `parent_hashes` as SHA256(spec.json bytes) for each parent.
+- Added `rng_subseed` per individual based on generation and stable index.
+- Switched to structured `ops_log` entries; legacy strings normalized.
+- Clarified elite handling: specs byte-for-byte preserved; breadcrumbs for elites live in DNA.
+- Tests verify parent hashes, subseeds, and ops log consistency; repo lint/format clean.
+- Tagged baseline `v0.0.7-phase7-baseline`.

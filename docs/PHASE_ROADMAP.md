@@ -1,25 +1,24 @@
 # CrapsSim-Evo — Active Phase Plan
 
-## Current Phase: 6 — Population & Evolution Loop (Completed)
+## Current Phase: 7 — Lineage & DNA Tracking (Completed)
 
 ### Objective
-Implement the deterministic selection→variation→replacement loop and export the next generation bundle.
+Record deterministic ancestry data: parent spec hashes, structured op logs, and per-individual RNG subseeds.
 
 ### Checkpoints
 | Phase | Checkpoint | Title | Status |
 |:----:|:------------|:------|:--------|
-| 6 | P6·C1 | Population Loading | ✅ Merged |
-| 6 | P6·C2 | Selection + Elitism | ✅ Merged |
-| 6 | P6·C3 | Variation (CX + Mut) | ✅ Merged |
-| 6 | P6·C4 | Export + Determinism | ✅ This commit |
+| 7 | P7·C1 | DNA utilities & schema 0.2 | ✅ Merged |
+| 7 | P7·C2 | Parent hashes & subseeds | ✅ Merged |
+| 7 | P7·C3 | Structured ops logs | ✅ Merged |
+| 7 | P7·C4 | Tests & docs | ✅ This commit |
 
 ### Exit Criteria
-- Next generation exported to folder and zip.
-- Deterministic with fixed `root_seed`.
+- `dna.json` contains parent hashes, ops logs, subseed, and `evo_schema_version: 0.2`.
 - Tests pass; Ruff + Black clean.
-- Tag: `v0.0.6-phase6-baseline`.
+- Tag: `v0.0.7-phase7-baseline`.
 
 ---
 
-## Next Phase: 7 — Lineage & DNA Tracking
-Enhance DNA with parent hashes, op parameters, RNG sub-seeds, and strong replay manifests.
+## Next Phase: 8 — Adaptive Stagnation Control
+Integrate Level of Stagnation (LoS) metrics and automatic trigger rules to escape plateaus.
