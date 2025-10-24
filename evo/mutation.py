@@ -57,13 +57,13 @@ def crossover_specs(a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def record_op(dna: Dict[str, Any], op: str) -> None:
+    # keep legacy strings for backward compat; evolver will add structured entries later
     dna.setdefault("ops_log", []).append(op)
 
 
 def mutate_individual(ind: Individual, nudge_frac: float = 0.1) -> Individual:
     child = ind.clone()
     child.spec = mutate_spec(child.spec, nudge_frac=nudge_frac)
-    # record direct lineage; mutated child descends from its source parent
     child.parents = [ind.seed_id]
     record_op(child.dna, f"mutate(nudge={nudge_frac})")
     return child
