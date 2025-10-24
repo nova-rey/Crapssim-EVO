@@ -40,6 +40,7 @@ def evolve(
     elites = elitism(current, elite_k)
     elite_ids = {e.seed_id for e in elites}
 
+    elite_info: list[tuple[Individual, list[dict[str, Any]]]] = [(elite, []) for elite in elites]
     offspring: list[tuple[Individual, list[dict[str, Any]]]] = []
     with rng_context("evolution", root_seed):
         while len(offspring) < (pop_size - elite_k):
@@ -61,28 +62,31 @@ def evolve(
             child.fitness = 0.0
             offspring.append((child, op_entries))
 
-    next_pop: List[Individual] = []
-    next_pop.extend(elites)
     next_gen_label = f"g{int(gen_id.strip('g') or '0')+1}"
-    for idx, (child, op_entries) in enumerate(offspring, start=1):
+    combined: list[tuple[Individual, list[dict[str, Any]]]] = elite_info + offspring
+
+    next_pop: List[Individual] = []
+    for idx, (candidate, op_entries) in enumerate(combined, start=1):
         parent_specs: list[tuple[str, Path]] = []
-        for pid in child.parents[:2] if child.parents else []:
+        for pid in candidate.parents[:2] if candidate.parents else []:
             ppath = results_root / pid / "spec.json"
             if ppath.exists():
                 parent_specs.append((pid, ppath))
         parent_hashes = build_parent_hashes(parent_specs)
         rng_subseed = make_rng_subseed(next_gen_label, idx, root_seed)
         candidate_id = f"seed_{idx:04d}"
-        child.dna = update_dna(
-            child.dna,
+        candidate.dna = update_dna(
+            candidate.dna,
             gen_id=next_gen_label,
             candidate_id=candidate_id,
-            parents=child.parents if child.parents else [],
+            parents=candidate.parents if candidate.parents else [],
             parent_hashes=parent_hashes,
             rng_subseed=rng_subseed,
             op_entries=op_entries,
         )
-        next_pop.append(child)
+        if candidate.seed_id not in elite_ids:
+            candidate.seed_id = candidate_id
+        next_pop.append(candidate)
 
     write_generation_folder(
         out_dir,
