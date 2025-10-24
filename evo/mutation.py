@@ -63,6 +63,8 @@ def record_op(dna: Dict[str, Any], op: str) -> None:
 def mutate_individual(ind: Individual, nudge_frac: float = 0.1) -> Individual:
     child = ind.clone()
     child.spec = mutate_spec(child.spec, nudge_frac=nudge_frac)
+    # record direct lineage; mutated child descends from its source parent
+    child.parents = [ind.seed_id]
     record_op(child.dna, f"mutate(nudge={nudge_frac})")
     return child
 
