@@ -90,3 +90,11 @@
 - Updated roadmap to mark Phase 4 complete.
 - Repo ready for Phase 5 (Fitness & Metrics Framework).
 - Lint and format confirmed clean (Ruff + Black).
+
+## Entry — Phase 5 Fitness & Metrics Framework
+- Added report and journal parsers for CSC bundle outputs.
+- Introduced metrics registry (`roi`, `drawdown`, `pso_rate`) with decorator pattern.
+- Implemented `compute_fitness()` producing deterministic `fitness.json` per seed.
+- Added tests covering ROI, drawdown, PSO, and fallback logic.
+- Documented scoring formula in `FITNESS_GUIDE.md`.
+- Verified Ruff + Black clean; tagged baseline `v0.0.5-phase5-baseline`.
