@@ -1,5 +1,5 @@
-import logging
 from evo.logging import setup_logging
+
 
 def test_basic_logging_output_contains_utc_and_level(capsys):
     logger = setup_logging("INFO", name="evo.test")
