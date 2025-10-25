@@ -4,6 +4,7 @@ import copy
 import random
 from typing import Any, Dict
 
+from .policy.adaptive import ADAPTIVE
 from .population import Individual
 
 _NUMERIC_FIELDS = ("place_6_8", "place_5_9", "odds_multiple", "regress_pct")
@@ -63,9 +64,10 @@ def record_op(dna: Dict[str, Any], op: str) -> None:
 
 def mutate_individual(ind: Individual, nudge_frac: float = 0.1) -> Individual:
     child = ind.clone()
-    child.spec = mutate_spec(child.spec, nudge_frac=nudge_frac)
+    actual_nudge = nudge_frac * 2.5 if ADAPTIVE.mode == "WILDCARD" else nudge_frac
+    child.spec = mutate_spec(child.spec, nudge_frac=actual_nudge)
     child.parents = [ind.seed_id]
-    record_op(child.dna, f"mutate(nudge={nudge_frac})")
+    record_op(child.dna, f"mutate(nudge={actual_nudge})")
     return child
 
 

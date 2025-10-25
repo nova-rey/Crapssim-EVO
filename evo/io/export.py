@@ -4,43 +4,60 @@ import json
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Iterable
 
 from ..population import Individual
 
 
 def write_generation_folder(
-    out_dir: Path, gen_id: str, individuals: Iterable[Individual], elite_ids: set[str] | None = None
+    out_dir: Path,
+    gen_id: str,
+    individuals: Iterable[Individual],
+    elite_ids: set[str] | None = None,
+    manifest_overrides: dict[str, Any] | None = None,
 ) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     elite_ids = elite_ids or set()
+    manifest_overrides = manifest_overrides or {}
+    trial_enabled = bool(manifest_overrides.get("grace", {}).get("enabled"))
+
     pop_manifest = {
         "pop_schema_version": "0.2",
         "gen_id": gen_id,
-        "mode": "NORMAL",
+        "mode": manifest_overrides.get("mode", "NORMAL"),
         "pop_size": 0,
         "candidates": [],
     }
     for idx, ind in enumerate(individuals, start=1):
         seed_dir = out_dir / f"seed_{idx:04d}"
         seed_dir.mkdir(parents=True, exist_ok=True)
-        if ind.seed_id in elite_ids:
+        is_elite = ind.seed_id in elite_ids
+        is_trial = trial_enabled and not is_elite
+        if is_elite:
             (seed_dir / "spec.json").write_text(json.dumps(ind.spec, indent=2), encoding="utf-8")
             dna = dict(ind.dna)
             dna.setdefault("identity", {})
             dna["identity"].update(
                 {"source": "evolver", "gen_id": gen_id, "candidate_id": seed_dir.name}
             )
+            if is_trial:
+                dna["identity"]["trial_cohort"] = True
             (seed_dir / "dna.json").write_text(json.dumps(dna, indent=2), encoding="utf-8")
         else:
             spec = dict(ind.spec)
             identity = spec.get("identity", {})
             identity.update({"source": "evolver", "gen_id": gen_id, "candidate_id": seed_dir.name})
+            if is_trial:
+                identity["trial_cohort"] = True
             spec["identity"] = identity
             (seed_dir / "spec.json").write_text(json.dumps(spec, indent=2), encoding="utf-8")
             (seed_dir / "dna.json").write_text(json.dumps(ind.dna, indent=2), encoding="utf-8")
-        pop_manifest["candidates"].append({"id": seed_dir.name})
+        pop_manifest["candidates"].append({"id": seed_dir.name, "trial_cohort": is_trial})
         pop_manifest["pop_size"] += 1
+    pop_manifest.update(manifest_overrides)
+    adaptive_mode = pop_manifest.get("adaptive", {}).get("mode")
+    if adaptive_mode:
+        pop_manifest["mode"] = adaptive_mode
     (out_dir / "population_manifest.json").write_text(
         json.dumps(pop_manifest, indent=2), encoding="utf-8"
     )

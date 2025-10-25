@@ -1,0 +1,5 @@
+phase: 8
+checkpoint: 5
+title: Adaptive Stagnation Control
+description: Adds LoS metric, adaptive policy, wildcard handling, and manifest logging.
+status: active

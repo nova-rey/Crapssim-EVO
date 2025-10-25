@@ -1,0 +1,4 @@
+current_phase: 8
+current_checkpoint: 5
+checkpoint_title: Adaptive Stagnation Control
+allow_behavior_change: true

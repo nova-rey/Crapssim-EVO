@@ -118,3 +118,10 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Clarified elite handling: specs byte-for-byte preserved; breadcrumbs for elites live in DNA.
 - Tests verify parent hashes, subseeds, and ops log consistency; repo lint/format clean.
 - Tagged baseline `v0.0.7-phase7-baseline`.
+
+## Entry — Phase 8 Adaptive Stagnation Control
+- Introduced deterministic Level-of-Stagnation (LoS) metric combining fitness deltas and diversity.
+- Added `AdaptiveState` policy that toggles between NORMAL and WILDCARD modes with meh plateau tracking.
+- Evolver now records adaptive snapshots and wildcard grace windows in `population_manifest.json`.
+- Wildcard generations double mutation magnitude and tag offspring with `trial_cohort=true` for grace audits.
+- Added documentation (`ADAPTIVE_GUIDE.md`) and regression tests for LoS + adaptive triggers.
