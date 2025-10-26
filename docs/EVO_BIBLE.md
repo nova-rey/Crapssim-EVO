@@ -127,3 +127,8 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Added documentation (`ADAPTIVE_GUIDE.md`) and regression tests for LoS + adaptive triggers.
 - LoS now computed via stdlib (`statistics.mean`); removed NumPy dependency and introduced
   `LOS_DELTA_SCALE=16`.
+## Entry — Phase 9 Convergence Analysis
+- Added deterministic analysis of EF/ROI/drawdown, diversity, and LoS across generations.
+- Computed trends over a sliding window (slope, plateau length, volatility).
+- Emitted `convergence.json`, `convergence.csv`, and `operator_stats.json`.
+- Pure stdlib; deterministic ordering and rounding; resilient to missing fields.
