@@ -4,7 +4,7 @@ import json
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Dict, Iterable, Optional
 
 from ..population import Individual
 
@@ -14,17 +14,16 @@ def write_generation_folder(
     gen_id: str,
     individuals: Iterable[Individual],
     elite_ids: set[str] | None = None,
-    manifest_overrides: dict[str, Any] | None = None,
+    manifest_overrides: Optional[Dict[str, Any]] = None,
 ) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     elite_ids = elite_ids or set()
-    manifest_overrides = manifest_overrides or {}
-    trial_enabled = bool(manifest_overrides.get("grace", {}).get("enabled"))
+    trial_enabled = bool((manifest_overrides or {}).get("grace", {}).get("enabled"))
 
     pop_manifest = {
         "pop_schema_version": "0.2",
         "gen_id": gen_id,
-        "mode": manifest_overrides.get("mode", "NORMAL"),
+        "mode": "NORMAL",
         "pop_size": 0,
         "candidates": [],
     }
@@ -54,10 +53,11 @@ def write_generation_folder(
             (seed_dir / "dna.json").write_text(json.dumps(ind.dna, indent=2), encoding="utf-8")
         pop_manifest["candidates"].append({"id": seed_dir.name, "trial_cohort": is_trial})
         pop_manifest["pop_size"] += 1
-    pop_manifest.update(manifest_overrides)
-    adaptive_mode = pop_manifest.get("adaptive", {}).get("mode")
-    if adaptive_mode:
-        pop_manifest["mode"] = adaptive_mode
+    if manifest_overrides:
+        pop_manifest.update(manifest_overrides)
+        if "adaptive" in manifest_overrides and "mode" in manifest_overrides["adaptive"]:
+            pop_manifest["mode"] = manifest_overrides["adaptive"]["mode"]
+
     (out_dir / "population_manifest.json").write_text(
         json.dumps(pop_manifest, indent=2), encoding="utf-8"
     )
