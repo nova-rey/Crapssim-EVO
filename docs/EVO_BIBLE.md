@@ -125,3 +125,5 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Evolver now records adaptive snapshots and wildcard grace windows in `population_manifest.json`.
 - Wildcard generations double mutation magnitude and tag offspring with `trial_cohort=true` for grace audits.
 - Added documentation (`ADAPTIVE_GUIDE.md`) and regression tests for LoS + adaptive triggers.
+- LoS now computed via stdlib (`statistics.mean`); removed NumPy dependency and introduced
+  `LOS_DELTA_SCALE=16`.
