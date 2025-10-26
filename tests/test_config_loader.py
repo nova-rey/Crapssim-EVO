@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import yaml
-
 from evo.config import load_config
 
 
