@@ -25,6 +25,10 @@ Phase 9 introduces deterministic rollups and trends across generations.
 - Rounding applied for floats where applicable
 - Pure stdlib (no pandas/matplotlib)
 
+_Added note:_ When `--deterministic` is used during export, convergence
+artifacts are included verbatim in the stable bundle. See `PACKAGING_GUIDE.md`
+for details.
+
 ## Resilience
 - Missing generations are listed in `skipped`
 - Missing ROI/drawdown fields do not error; they remain null
