@@ -137,3 +137,11 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Added optional deterministic bundle mode.
 - Introduced `interop_manifest.json` for CSC ingestion.
 - Ensured byte-stable zips, SHA-256 bundle ID, and explicit schema v0.1.
+- Shared manifest validator ensures `bundle_id` matches bundle hash.
+- Tests cover manifest presence, schema, and deterministic zip ordering.
+
+## Entry — Phase 11 Dual-Lane Interop
+- Added `evo.interop.trigger` with file and HTTP drivers.
+- Request id is deterministic (`bundle_id|generation|seed`).
+- Atomic file writes for jobs; HTTP idempotency key enforced.
+- Tests cover file round-trip, HTTP round-trip, and API wrapper.
