@@ -1,18 +1,26 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import shutil
 import tempfile
 import zipfile
 from datetime import datetime, timezone
+from hashlib import sha256
 from pathlib import Path
-from typing import Dict, Iterable, Optional
+from typing import Dict, Iterable, List, Optional
 
 
 class BundleError(Exception):
     """Raised for bundle validation or integrity errors."""
+
+
+def _sorted_paths(paths: Iterable[Path]) -> List[Path]:
+    return sorted(paths, key=lambda p: str(p).lower())
+
+
+def _stable_json_dumps(obj: Dict) -> str:
+    return json.dumps(obj, sort_keys=True, indent=2)
 
 
 def _safe_extract(zip_path: Path, dest_dir: Path) -> None:
@@ -72,7 +80,7 @@ def write_run_artifacts(staging_dir: Path, seed_id: str, artifacts: Dict[str, Pa
 
 
 def _hash_file(path: Path) -> str:
-    h = hashlib.sha256()
+    h = sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
@@ -118,6 +126,24 @@ def write_bundle(staging_dir: Path, out_zip: Path) -> Path:
     return out_zip
 
 
+def write_bundle_zip(root: Path, out_path: Path, deterministic: bool = False) -> Path:
+    """Zip generation folder; if deterministic=True, ensure byte-stable ordering."""
+    members = list(root.rglob("*"))
+    members = [m for m in members if m.is_file()]
+    members = _sorted_paths(members)
+
+    with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as z:
+        for m in members:
+            arc = m.relative_to(root).as_posix()
+            data = m.read_bytes()
+            if deterministic and m.name == "bundle_meta.json":
+                meta = json.loads(data.decode("utf-8"))
+                meta.pop("created_utc", None)
+                data = _stable_json_dumps(meta).encode("utf-8")
+            z.writestr(arc, data)
+    return out_path
+
+
 def write_bundle_manifest(staging_dir: Path) -> None:
     """Create meta/bundle.json describing this bundle."""
     meta_dir = staging_dir / "meta"
@@ -135,3 +161,26 @@ def write_bundle_manifest(staging_dir: Path) -> None:
         },
     }
     (meta_dir / "bundle.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+
+def compute_zip_hash(path: Path) -> str:
+    h = sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def write_interop_manifest(bundle_path: Path, gen_id: str, deterministic: bool) -> Path:
+    payload = {
+        "schema_version": "0.1",
+        "bundle_id": compute_zip_hash(bundle_path),
+        "generation": gen_id,
+        "compat": "csc>=0.30.0",
+        "contents": ["specs", "dna", "metrics", "convergence"],
+        "created_by": "crapssim-evo",
+        "deterministic": bool(deterministic),
+    }
+    path = bundle_path.parent / "interop_manifest.json"
+    path.write_text(_stable_json_dumps(payload), encoding="utf-8")
+    return path

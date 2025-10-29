@@ -132,3 +132,8 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Computed trends over a sliding window (slope, plateau length, volatility).
 - Emitted `convergence.json`, `convergence.csv`, and `operator_stats.json`.
 - Pure stdlib; deterministic ordering and rounding; resilient to missing fields.
+
+## Entry — Phase 10 Deterministic Packaging
+- Added optional deterministic bundle mode.
+- Introduced `interop_manifest.json` for CSC ingestion.
+- Ensured byte-stable zips, SHA-256 bundle ID, and explicit schema v0.1.
