@@ -145,3 +145,33 @@ Current loop is LEAP-compatible by design, but pure stdlib for now.
 - Request id is deterministic (`bundle_id|generation|seed`).
 - Atomic file writes for jobs; HTTP idempotency key enforced.
 - Tests cover file round-trip, HTTP round-trip, and API wrapper.
+
+## Era — Toward Data-Center-Ready Evo
+
+Recent milestones laid the groundwork for this push:
+
+- Phase 7 introduced structured DNA lineage with parent hashes and subseeds, ensuring deterministic ancestry tracking.
+- Phase 8 delivered adaptive Level-of-Stagnation control and wildcard generations to manage stagnation intentionally.
+- Phase 9 added convergence analytics and operator statistics so campaigns can be audited across generations.
+- Phase 10 locked down deterministic packaging with interop manifests for byte-stable hand-offs to CSC.
+- Phase 11 enabled dual-lane interop (file and HTTP) so Evo can drive CSC in lab or service environments.
+
+This era focuses on turning Evo from a strong research tool into a
+data-center-ready platform:
+
+- Split structural and behavioral DNA so strategies have a clear “body” and
+  “brain”.
+- Build a production-grade structural operator pool with strict legality
+  guarantees and deterministic behavior.
+- Ingest CSC results into a robust, multi-metric fitness function that
+  balances return and risk.
+- Add an evolution orchestrator that supports long-running, resumable
+  campaigns with clear error semantics.
+- Align Evo’s behavioral DNA with CSC’s internal DSL so behaviors can be
+  evolved without sacrificing determinism or separation of concerns.
+- Prepare for multi-lineage, island-model evolution across multiple workers.
+
+For detailed plans, see:
+
+- `DEV_ROADMAP.md` — phased roadmap to a data-center-ready system.
+- `DESIGN_PHILOSOPHY.md` — core principles guiding future changes.
